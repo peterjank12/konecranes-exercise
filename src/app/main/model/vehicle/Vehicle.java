@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Vehicle {
     private static final AtomicInteger NEXT_ID = new AtomicInteger(0);
     private final int id;
+    private boolean inMovement = true;
     private Direction direction;
     private Position position;
 
@@ -18,9 +19,25 @@ public class Vehicle {
         this.direction = direction;
     }
 
-    public void Move() {
-        position.setX(position.getX() + direction.getXMovement());
-        position.setY(position.getY() + direction.getYMovement());
+    public void Move(int xConstraint, int yConstraint) {
+        int newXPos = position.getX() + direction.getXMovement();
+        int newYPos = position.getY() + direction.getYMovement();
+        inMovement = true;
+        int xCons = xConstraint/2;
+        int yCons = yConstraint/2;
+
+        if (newXPos < (xCons - 20) && newXPos > (-1 * xCons + 5)) {
+            position.setX(newXPos);
+        }
+        else {
+            inMovement = false;
+        }
+        if (newYPos < (yCons - 5) && newYPos > (-1 * yCons + 20)) {
+            position.setY(newYPos);
+        }
+        else {
+            inMovement = false;
+        }
     }
 
     @Override
@@ -52,5 +69,7 @@ public class Vehicle {
         return id;
     }
 
-
+    public boolean isInMovement() {
+        return inMovement;
+    }
 }

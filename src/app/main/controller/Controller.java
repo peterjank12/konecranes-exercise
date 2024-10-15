@@ -4,7 +4,7 @@ import app.main.model.command.*;
 import app.main.model.vehicle.Direction;
 import app.main.model.vehicle.Position;
 import app.main.model.vehicle.Vehicle;
-import app.main.view.View;
+import app.main.view.GUI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,31 +13,17 @@ import java.util.Optional;
 public class Controller {
 
     private List<Vehicle> vehicles;
-    private final Thread inputThread;
     private final Thread simulationThread;
-    private final InputInterpreter inputInterpreter;
-    private final View consoleView;
+    private final GUI gui;
 
     public Controller(){
         vehicles = initializeVehicles();
-        consoleView = new View();
-        inputInterpreter = new InputInterpreter();
-        inputThread = new Thread(new InputHandler(this));
+        gui = new GUI(this);
         simulationThread = new Thread(new SimulationHandler(this));
-        inputThread.start();
         simulationThread.start();
-
     }
 
-    public void processInput(String input) {
-
-        Optional<Command> optionalCommand = inputInterpreter.createCommand(input);
-
-        if (optionalCommand.isEmpty()) {
-            System.out.println("Wrong command!");
-            return;
-        }
-        Command command = optionalCommand.get();
+    public void processInput(Command command) {
 
         if(command instanceof CreateVehicle) {
             createVehicle((CreateVehicle) command);
@@ -56,7 +42,6 @@ public class Controller {
 
     private void exitApplication() {
         System.out.println("Exited app!");
-        inputThread.interrupt();
         simulationThread.interrupt();
     }
 
@@ -79,14 +64,14 @@ public class Controller {
 
     public void tick() {
         this.updateModel();
-       // this.updateView();
+        this.updateView();
     }
 
     private void updateModel() {
-        vehicles.forEach(Vehicle::Move);
+        vehicles.forEach(vehicle -> vehicle.Move(gui.getGridXConstraint(), gui.getGridYConstraint()));
     }
     private void updateView() {
-        consoleView.update(this);
+        gui.updateDisplay();
     }
 
     private void addVehicle(Position position, Direction direction) {
@@ -105,9 +90,11 @@ public class Controller {
     }
     private List<Vehicle> initializeVehicles() {
         vehicles = new ArrayList<Vehicle>();
-        vehicles.add(new Vehicle(new Position(3,-2), Direction.NORTH));
-        vehicles.add(new Vehicle(new Position(-1,0), Direction.EAST));
-        vehicles.add(new Vehicle(new Position(-4,6), Direction.SOUTH));
+        vehicles.add(new Vehicle(new Position(0,0), Direction.NORTH));
+        vehicles.add(new Vehicle(new Position(0,0), Direction.EAST));
+        vehicles.add(new Vehicle(new Position(0,0), Direction.SOUTH));
+        vehicles.add(new Vehicle(new Position(0,0), Direction.WEST));
+
         return vehicles;
     }
 

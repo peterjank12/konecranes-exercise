@@ -16,9 +16,10 @@ public class CreateVehicle implements Command {
     private static final String DIR = "dir";
     private static Pattern pattern;
 
-
-    public CreateVehicle() {
-        pattern = Pattern.compile("create (?<posx>[0-9]) (?<posy>[0-9]) (?<dir>NORTH|EAST|NONE|SOUTH|WEST)");
+    public CreateVehicle(Position position, Direction direction) {
+        this.position = position;
+        this.direction = direction;
+        pattern = Pattern.compile("changedir (?<id>[0-9]) (?<dir>NORTH|EAST|NONE|SOUTH|WEST)");
     }
 
     @Override

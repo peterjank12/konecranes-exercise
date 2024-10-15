@@ -1,7 +1,5 @@
 package app.main.controller;
 
-import java.util.concurrent.Callable;
-
 public class SimulationHandler implements Runnable {
 
     private final Controller controller;
@@ -17,7 +15,7 @@ public class SimulationHandler implements Runnable {
         while(!stopped) {
             controller.tick();
             try {
-                Thread.sleep(1000);
+                Thread.sleep(20);
             } catch (InterruptedException e) {
                 stopped = true;
             }

@@ -15,10 +15,12 @@ public class ChangeDirection implements Command {
     private static final String ID = "id";
     private static final String DIR = "dir";
 
-    public ChangeDirection(){
+
+    public ChangeDirection(int id, Direction direction) {
+        this.id = id;
+        this.direction = direction;
         pattern = Pattern.compile("changedir (?<id>[0-9]) (?<dir>NORTH|EAST|NONE|SOUTH|WEST)");
     }
-
 
     @Override
     public Optional<Command> commandFromString(String input) {
