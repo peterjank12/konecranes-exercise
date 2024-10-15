@@ -13,10 +13,10 @@ import java.util.Optional;
 public class Controller {
 
     private List<Vehicle> vehicles;
-    private Thread inputThread;
-    private Thread simulationThread;
-    private InputInterpreter inputInterpreter;
-    private View consoleView;
+    private final Thread inputThread;
+    private final Thread simulationThread;
+    private final InputInterpreter inputInterpreter;
+    private final View consoleView;
 
     public Controller(){
         vehicles = initializeVehicles();
@@ -83,7 +83,7 @@ public class Controller {
     }
 
     private void updateModel() {
-        vehicles.forEach(v -> v.Move());
+        vehicles.forEach(Vehicle::Move);
     }
     private void updateView() {
         consoleView.update(this);
@@ -101,7 +101,7 @@ public class Controller {
             vehicle.setDirection(direction);
             return true;
         }
-        else return false;
+        return false;
     }
     private List<Vehicle> initializeVehicles() {
         vehicles = new ArrayList<Vehicle>();

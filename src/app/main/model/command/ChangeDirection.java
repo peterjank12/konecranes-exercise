@@ -4,34 +4,34 @@ package app.main.model.command;
 import app.main.model.vehicle.Direction;
 
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ChangeDirection implements Command {
     public static final String CHANGEDIR = "changedir";
     private int id;
     private Direction direction;
+    private static Pattern pattern;
+    private static final String ID = "id";
+    private static final String DIR = "dir";
 
-   public ChangeDirection(){}
-
-    public ChangeDirection(int id, Direction direction) {
-        this.id = id;
-        this.direction = direction;
+    public ChangeDirection(){
+        pattern = Pattern.compile("changedir (?<id>[0-9]) (?<dir>NORTH|EAST|NONE|SOUTH|WEST)");
     }
+
 
     @Override
     public Optional<Command> commandFromString(String input) {
 
-        if (input.chars().filter(ch -> ch ==' ').count() == 2 ) {
-            String arr[] = input.split(" ", 2);
-            String firstWord = arr[0];
-            String theRest = arr[1];
-
-            if (CHANGEDIR.equals(firstWord)) {
-                String args[] = theRest.split(" ", 2);
-                this.id = Integer.parseInt(args[0]);
-                this.direction = Direction.fromValue(args[1]);
-                return Optional.of(this);
-            }
+        Matcher matcher = pattern.matcher(input);
+        if(matcher.matches()) {
+            int id = Integer.parseInt(matcher.group(ID));
+            String dir = matcher.group(DIR);
+            this.id = id;
+            direction = Direction.fromValue(dir);
+            return Optional.of(this);
         }
+
         return Optional.empty();
 
     }
@@ -44,11 +44,4 @@ public class ChangeDirection implements Command {
         return direction;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
 }

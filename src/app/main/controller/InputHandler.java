@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class InputHandler implements Runnable{
 
-    private Controller controller;
+    private final Controller controller;
     private boolean stopped;
 
 
