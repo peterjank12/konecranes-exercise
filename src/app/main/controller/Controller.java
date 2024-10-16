@@ -4,27 +4,26 @@ import app.main.model.command.*;
 import app.main.model.vehicle.Direction;
 import app.main.model.vehicle.Position;
 import app.main.model.vehicle.Vehicle;
-import app.main.view.GUI;
+import app.main.view.SwingView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+// Controls the flow of the application. Handles user inputs and updates the model accordingly. Keeps the view up to date with the model.
 public class Controller {
 
     private List<Vehicle> vehicles;
     private final Thread simulationThread;
-    private final GUI gui;
+    private SwingView view = null;
 
     public Controller(){
         vehicles = initializeVehicles();
-        gui = new GUI(this);
         simulationThread = new Thread(new SimulationHandler(this));
         simulationThread.start();
     }
 
     public void processInput(Command command) {
-
         if(command instanceof CreateVehicle) {
             createVehicle((CreateVehicle) command);
             this.updateView();
@@ -43,6 +42,7 @@ public class Controller {
     private void exitApplication() {
         System.out.println("Exited app!");
         simulationThread.interrupt();
+        view.dispose();
     }
 
     private void changeDirection(ChangeDirection command) {
@@ -63,15 +63,17 @@ public class Controller {
 
 
     public void tick() {
-        this.updateModel();
-        this.updateView();
+        if (view != null) {
+            this.updateModel();
+            this.updateView();
+        }
     }
 
     private void updateModel() {
-        vehicles.forEach(vehicle -> vehicle.Move(gui.getGridXConstraint(), gui.getGridYConstraint()));
+        vehicles.forEach(vehicle -> vehicle.Move(view.getGridXConstraint(), view.getGridYConstraint()));
     }
     private void updateView() {
-        gui.updateDisplay();
+        view.updateDisplay();
     }
 
     private void addVehicle(Position position, Direction direction) {
@@ -96,6 +98,11 @@ public class Controller {
         vehicles.add(new Vehicle(new Position(0,0), Direction.WEST));
 
         return vehicles;
+    }
+
+    public void addView(SwingView view){
+        this.view = view;
+        view.setVisible(true);
     }
 
     public List<Vehicle> getVehicles() {

@@ -1,13 +1,11 @@
 package app.main.model.vehicle;
 
-import app.main.model.vehicle.Direction;
-import app.main.model.vehicle.Position;
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
+// Models a Vehicle
 public class Vehicle {
-    private static final AtomicInteger NEXT_ID = new AtomicInteger(0);
+    private static final AtomicInteger NEXT_ID = new AtomicInteger(1);
     private final int id;
     private boolean inMovement = true;
     private Direction direction;
@@ -19,6 +17,7 @@ public class Vehicle {
         this.direction = direction;
     }
 
+    // Moves the vehicle in the set direction, signals border contact
     public void Move(int xConstraint, int yConstraint) {
         int newXPos = position.getX() + direction.getXMovement();
         int newYPos = position.getY() + direction.getYMovement();
@@ -26,13 +25,13 @@ public class Vehicle {
         int xCons = xConstraint/2;
         int yCons = yConstraint/2;
 
-        if (newXPos < (xCons - 20) && newXPos > (-1 * xCons + 5)) {
+        if (newXPos < (xCons /*- 20*/) && newXPos > (-1 * xCons/* + 5*/)) {
             position.setX(newXPos);
         }
         else {
             inMovement = false;
         }
-        if (newYPos < (yCons - 5) && newYPos > (-1 * yCons + 20)) {
+        if (newYPos < (yCons /*- 5*/) && newYPos > (-1 * yCons/* + 20*/)) {
             position.setY(newYPos);
         }
         else {
@@ -42,16 +41,11 @@ public class Vehicle {
 
     @Override
     public String toString() {
-        return "Vehicle{" +
-                "id = " + Integer.toString(id) +
-                ", direction = " + direction.toString() +
-                ", position = "  + position.toString() +
-                '}';
+        return  "ID: " + id +
+                " | Position: "  + position.toString() +
+                ", Direction: " + direction.toString();
     }
 
-    public Direction getDirection() {
-        return direction;
-    }
 
     public Position getPosition() {
         return position;
@@ -59,10 +53,6 @@ public class Vehicle {
 
     public void setDirection(Direction direction) {
         this.direction = direction;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
     public int getId() {

@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// models the direction change command
 public class ChangeDirection implements Command {
     public static final String CHANGEDIR = "changedir";
     private int id;
@@ -19,7 +20,7 @@ public class ChangeDirection implements Command {
     public ChangeDirection(int id, Direction direction) {
         this.id = id;
         this.direction = direction;
-        pattern = Pattern.compile("changedir (?<id>[0-9]) (?<dir>NORTH|EAST|NONE|SOUTH|WEST)");
+        //pattern = Pattern.compile("changedir (?<id>[0-9]) (?<dir>NORTH|EAST|NONE|SOUTH|WEST)");
     }
 
     @Override

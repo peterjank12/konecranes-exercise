@@ -2,6 +2,7 @@ package app.main.model.vehicle;
 
 import java.util.Locale;
 
+// models Vehicle direction as EAST, NORTH, WEST, SOUTH, NONE
 public enum Direction {
 
     EAST(1, 0),
@@ -13,12 +14,15 @@ public enum Direction {
 
     private final int xMovement;
     private final int yMovement;
+    private double scale;
 
     Direction(int xMovement, int yMovement) {
         this.xMovement = xMovement;
         this.yMovement = yMovement;
+        scale = 1.00;
     }
 
+    // returns enum instance based on name
     public static Direction fromValue(String value) {
         for (Direction b : Direction.values()) {
             if (b.name().equals(value.toUpperCase(Locale.getDefault()))) {
@@ -34,6 +38,10 @@ public enum Direction {
 
     public int getYMovement() {
         return yMovement;
+    }
+
+    public void setScale(double scale) {
+        this.scale = scale;
     }
 }
 

@@ -1,5 +1,6 @@
 package app.main.model.vehicle;
 
+// models Vehicle position as x and y coordinates
 public class Position {
 
     private Integer x;
@@ -28,9 +29,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return "{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return "(" + x + ", " + y + ')';
     }
 }

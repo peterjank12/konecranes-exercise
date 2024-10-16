@@ -1,5 +1,6 @@
 package app.main.controller;
 
+// handles the simulation of time for the movement of vehicles and view updates
 public class SimulationHandler implements Runnable {
 
     private final Controller controller;
@@ -10,6 +11,7 @@ public class SimulationHandler implements Runnable {
         stopped = false;
     }
 
+    // signals the controller every x milliseconds
     @Override
     public void run() {
         while(!stopped) {

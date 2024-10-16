@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// models the new vehicle creation command
 public class CreateVehicle implements Command {
     private Position position;
     private Direction direction;
@@ -19,7 +20,7 @@ public class CreateVehicle implements Command {
     public CreateVehicle(Position position, Direction direction) {
         this.position = position;
         this.direction = direction;
-        pattern = Pattern.compile("changedir (?<id>[0-9]) (?<dir>NORTH|EAST|NONE|SOUTH|WEST)");
+        //pattern = Pattern.compile("changedir (?<id>[0-9]) (?<dir>NORTH|EAST|NONE|SOUTH|WEST)");
     }
 
     @Override
@@ -44,13 +45,6 @@ public class CreateVehicle implements Command {
         return direction;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
 }
 
 
