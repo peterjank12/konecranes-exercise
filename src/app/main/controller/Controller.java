@@ -23,7 +23,9 @@ public class Controller {
         simulationThread.start();
     }
 
+    // processes the user input in form of commands
     public void processInput(Command command) {
+
         if(command instanceof CreateVehicle) {
             createVehicle((CreateVehicle) command);
             this.updateView();
@@ -39,12 +41,15 @@ public class Controller {
         }
     }
 
+    // shuts down running thread and exits the application
     private void exitApplication() {
-        System.out.println("Exited app!");
+        System.out.println("Exiting app!");
         simulationThread.interrupt();
         view.dispose();
     }
 
+
+    // changes direction of vehicle based on id
     private void changeDirection(ChangeDirection command) {
         int id =  command.getId();
         Direction direction = command.getDirection();
@@ -54,6 +59,7 @@ public class Controller {
             System.out.println("Couldn't change vehicle direction!");
     }
 
+    // creates new vehicle on given position with given direction
     private void createVehicle(CreateVehicle command) {
         Position position = command.getPosition();
         Direction direction = command.getDirection();
@@ -61,7 +67,7 @@ public class Controller {
         System.out.println("Created Vehicle!");
     }
 
-
+    // simulates time, calls update on model and view
     public void tick() {
         if (view != null) {
             this.updateModel();
@@ -69,18 +75,23 @@ public class Controller {
         }
     }
 
+    // prompts model to update, passes canvas constraints
     private void updateModel() {
         vehicles.forEach(vehicle -> vehicle.Move(view.getGridXConstraint(), view.getGridYConstraint()));
     }
+
+    // updates view
     private void updateView() {
         view.updateDisplay();
     }
 
+    // creates and adds new vehicle to vehicles
     private void addVehicle(Position position, Direction direction) {
         Vehicle vehicle = new Vehicle( position, direction);
         vehicles.add(vehicle);
     }
 
+    // sets the vehicles direction
     private boolean setVehicleDirection(int id, Direction direction) {
         Optional<Vehicle> optional = vehicles.stream().filter(vehicle -> vehicle.getId() == id).findAny();
         if(optional.isPresent()) {
@@ -90,6 +101,8 @@ public class Controller {
         }
         return false;
     }
+
+    // initializes the vehicles list
     private List<Vehicle> initializeVehicles() {
         vehicles = new ArrayList<Vehicle>();
         vehicles.add(new Vehicle(new Position(0,0), Direction.NORTH));
@@ -100,11 +113,13 @@ public class Controller {
         return vehicles;
     }
 
+    // adds a view to the controller
     public void addView(SwingView view){
         this.view = view;
         view.setVisible(true);
     }
 
+    // gets the vehicles
     public List<Vehicle> getVehicles() {
         return vehicles;
     }

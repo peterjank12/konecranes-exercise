@@ -91,7 +91,6 @@ public class SwingView extends JFrame {
 
         // graphic display canvas
         gridPanel = new GridPanel(controller.getVehicles());
-        gridPanel.setMaximumSize(new Dimension(200,200));
         this.add(gridPanel,BorderLayout.CENTER);
 
         updateDisplay();

@@ -14,12 +14,10 @@ public enum Direction {
 
     private final int xMovement;
     private final int yMovement;
-    private double scale;
 
     Direction(int xMovement, int yMovement) {
         this.xMovement = xMovement;
         this.yMovement = yMovement;
-        scale = 1.00;
     }
 
     // returns enum instance based on name
@@ -40,8 +38,6 @@ public enum Direction {
         return yMovement;
     }
 
-    public void setScale(double scale) {
-        this.scale = scale;
-    }
+
 }
 

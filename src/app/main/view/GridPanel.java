@@ -3,6 +3,7 @@ package app.main.view;
 import app.main.model.vehicle.Vehicle;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class GridPanel extends JPanel {
     public GridPanel(List<Vehicle> vehicles){
         this.vehicles = vehicles;
         setBackground(Color.DARK_GRAY);
-        //setBorder(new LineBorder(Color.lightGray,5));
+        setBorder(new LineBorder(Color.lightGray,10));
     }
 
     // shows the panel graphically
@@ -26,8 +27,12 @@ public class GridPanel extends JPanel {
 
     // paints each vehicle on the panel
     private void paintVehicle(Graphics g, Vehicle v, Color color) {
+        int diameter = 15;
+        int x = v.getPosition().getX() + getWidth() / 2 - diameter / 2;
+        int y = v.getPosition().getY() * -1 + getHeight() / 2 - diameter / 2;
+
         g.setColor(color);
-        g.fillOval(v.getPosition().getX() + getWidth()/2, v.getPosition().getY()*-1 + getHeight()/2,15,15);
+        g.fillOval(x, y, diameter, diameter);
     }
 
 }

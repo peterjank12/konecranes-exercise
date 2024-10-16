@@ -25,13 +25,13 @@ public class Vehicle {
         int xCons = xConstraint/2;
         int yCons = yConstraint/2;
 
-        if (newXPos < (xCons /*- 20*/) && newXPos > (-1 * xCons/* + 5*/)) {
+        if (newXPos < (xCons - 17.5) && newXPos > (-1 * xCons + 17.5)) {
             position.setX(newXPos);
         }
         else {
             inMovement = false;
         }
-        if (newYPos < (yCons /*- 5*/) && newYPos > (-1 * yCons/* + 20*/)) {
+        if (newYPos < (yCons - 17.5) && newYPos > (-1 * yCons + 17.5)) {
             position.setY(newYPos);
         }
         else {

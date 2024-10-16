@@ -7,7 +7,6 @@ import java.util.Optional;
 public class ExitApplication implements Command {
     private static final String EXIT = "exit";
 
-    // creates command from i
     @Override
     public Optional<Command> commandFromString(String input) {
 
